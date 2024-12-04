@@ -18,4 +18,4 @@ WORKDIR /app
 COPY --from=build /publish .
 
 # Указываем команду для запуска приложения
-ENTRYPOINT ["dotnet", "ConsoleApp2.sln"]
+ENTRYPOINT ["dotnet", "ConsoleApp1.sln"]
