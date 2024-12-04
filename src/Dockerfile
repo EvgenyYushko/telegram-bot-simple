@@ -1,30 +1,21 @@
-name: .NET
+# Используем официальный образ .NET SDK для сборки приложения
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+WORKDIR /app
 
-on: 
-  push:
-    branches:
-      - master
+# Копируем файлы проекта в контейнер
+COPY *.csproj ./
+RUN dotnet restore
 
-jobs:
-  build:
-    runs-on: windows-latest
+# Копируем остальные файлы и собираем проект
+COPY . ./
+RUN dotnet publish -c Release -o /publish
 
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+# Используем официальный образ .NET Runtime для запуска
+FROM mcr.microsoft.com/dotnet/aspnet:7.0
+WORKDIR /app
 
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: '5.0.x'
+# Копируем собранное приложение из предыдущего этапа
+COPY --from=build /publish .
 
-    - name: Restore dependencies
-      run: dotnet restore ConsoleApp1.sln
-         
-    - name: Build solution
-      run: dotnet build ConsoleApp1.sln.sln --configuration Release --no-restore
-
-
-    # Вывод содержимого файла в консоль
-    #- name: Print test results file
-    #  run: cat ./SimpleCalculator.Tests/TestResults/test_results.trx 
+# Указываем команду для запуска приложения
+ENTRYPOINT ["dotnet", "ConsoleApp1.sln"]
