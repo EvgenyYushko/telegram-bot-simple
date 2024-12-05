@@ -35,6 +35,11 @@ namespace WebApplication1
 				var chatId = update.Message.Chat.Id;
 				var messageText = update.Message.Text;
 
+				if (messageText.Contains("хуй"))
+				{
+					await _botClient.BanChatMemberAsync(chatId, update.Message.From.Id);
+				}
+
 				//1231047171
 				await _botClient.SendTextMessageAsync(chatId, $"You said: {messageText}");
 			}
