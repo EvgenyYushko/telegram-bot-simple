@@ -53,7 +53,7 @@ namespace WebApplication1
 				endpoints.MapControllers();
 				endpoints.MapRazorPages();
 			});
-			
+
 			//var s = new BotController();
 		}
 	}
