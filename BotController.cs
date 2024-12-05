@@ -92,8 +92,8 @@ namespace WebApplication1
 			try
 			{
 				var cancellationToken = new CancellationToken();
-
-				Console.WriteLine($"{update}");;
+				var t = System.Text.Json.JsonSerializer.Deserialize<Update>(update.ToString());
+				Console.WriteLine($"{t}");;
 				Console.WriteLine($"Bot {await _botClient.GetMeAsync()} is running...");;
 
 				//if (update.Message == null) return Ok();
