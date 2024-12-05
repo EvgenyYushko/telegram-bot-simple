@@ -32,6 +32,7 @@ public class Program
 
     static async Task Main(string[] args)
     {
+
         botClient = new TelegramBotClient(botToken);
 
 		// Инициализация Vk API
