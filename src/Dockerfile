@@ -5,7 +5,7 @@ WORKDIR /app
 # Копируем файлы проекта в контейнер
 COPY *.sln ./
 COPY *.csproj .
-COPY WebApplication1/*.csproj ./WebApplication1
+COPY *.csproj .
 
 # Проверяем содержимое рабочего каталога
 RUN ls -la
