@@ -87,13 +87,14 @@ namespace WebApplication1
 			Console.WriteLine($"Start");
 			Console.WriteLine($"Raw data: {update}");
 
-			//if (update.Message != null)
-			//{
-			//	var chatId = update.Message.Chat.Id;
-			//	var messageText = update.Message.Text;
+			if (update.Message != null)
+			{
+				var chatId = update.Message.Chat.Id;
+				var messageText = update.Message.Text;
 
-				await _botClient.SendTextMessageAsync(1231047171, $"You said: {update.Message.Text}");
-			//}
+				//1231047171
+				await _botClient.SendTextMessageAsync(chatId, $"You said: {messageText}");
+			}
 
 			return Ok();
 		}
