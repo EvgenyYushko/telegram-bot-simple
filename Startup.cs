@@ -24,7 +24,7 @@ namespace WebApplication1
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddControllers();
-			//services.AddRazorPages();
+			services.AddRazorPages();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,7 +51,7 @@ namespace WebApplication1
 			app.UseEndpoints(endpoints =>
 			{
 				endpoints.MapControllers();
-				//endpoints.MapRazorPages();
+				endpoints.MapRazorPages();
 			});
 			
 			//var s = new BotController();
