@@ -33,4 +33,4 @@ RUN ls -la
 
 # Указываем команду для запуска приложения
 ENTRYPOINT ["/bin/bash", "-c", "exec dotnet ConsoleApp2.dll"]
-№ ENTRYPOINT ["dotnet", "ConsoleApp2.dll"]
+# ENTRYPOINT ["dotnet", "ConsoleApp2.dll"]
