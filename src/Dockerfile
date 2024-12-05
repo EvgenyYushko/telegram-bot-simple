@@ -32,4 +32,5 @@ COPY --from=build /publish .
 RUN ls -la
 
 # Указываем команду для запуска приложения
-ENTRYPOINT ["dotnet", "ConsoleApp2.dll"]
+ENTRYPOINT ["/bin/bash", "-c", "exec dotnet ConsoleApp2.dll"]
+# ENTRYPOINT ["dotnet", "ConsoleApp2.dll"]
