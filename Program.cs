@@ -73,15 +73,15 @@ public class Program
 		botClient.OnMakingApiRequest += BotClient_OnMakingApiRequest;
 
         Console.WriteLine("Бот запущен. Нажмите Enter для выхода.");
-        Console.ReadLine();
+        //Console.ReadLine();
 
 		await botClient.SendTextMessageAsync(
 			chatId: 1231047171,
-			text: $"Новое сообщение от пользователя {vkUserId}: sdsds"
+			text: $"Новое сообщение от пользователя {vkUserId}: Я запустился!"
 		);
 
         // Завершение работы бота
-        cts.Cancel();
+        //cts.Cancel();
     }
 
 	private static ValueTask BotClient_OnMakingApiRequest(ITelegramBotClient botClient, Telegram.Bot.Args.ApiRequestEventArgs args, CancellationToken cancellationToken = default)
