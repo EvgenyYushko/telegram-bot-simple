@@ -1,5 +1,5 @@
 # Используем официальный образ .NET SDK для сборки приложения
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /app
 
 # Копируем файлы проекта в контейнер
@@ -22,7 +22,7 @@ RUN ls -la
 RUN dotnet publish ConsoleApp2.csproj  -c Release -o /publish
 
 # Используем официальный образ .NET Runtime для запуска
-FROM mcr.microsoft.com/dotnet/aspnet:7.0
+FROM mcr.microsoft.com/dotnet/aspnet:5.0
 WORKDIR /app
 
 # Копируем собранное приложение из предыдущего этапа
