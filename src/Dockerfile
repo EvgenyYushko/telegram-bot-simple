@@ -5,6 +5,7 @@ WORKDIR /app
 # Копируем файлы проекта в контейнер
 COPY *.sln ./
 COPY *.csproj .
+COPY WebApplication1/*.csproj ./WebApplication1
 
 # Проверяем содержимое рабочего каталога
 RUN ls -la
@@ -19,7 +20,7 @@ COPY . ./
 RUN ls -la
 
 # Сборка и публикация
-RUN dotnet publish ConsoleApp2.csproj  -c Release -o /publish
+RUN dotnet publish WebApplication1.csproj  -c Release -o /publish
 
 # Используем официальный образ .NET Runtime для запуска
 FROM mcr.microsoft.com/dotnet/aspnet:5.0
@@ -32,5 +33,5 @@ COPY --from=build /publish .
 RUN ls -la
 
 # Указываем команду для запуска приложения
-ENTRYPOINT ["/bin/bash", "-c", "exec dotnet ConsoleApp2.dll"]
-# ENTRYPOINT ["dotnet", "ConsoleApp2.dll"]
+# ENTRYPOINT ["/bin/bash", "-c", "exec dotnet ConsoleApp2.dll"]
+ENTRYPOINT ["dotnet", "WebApplication1.dll"]
