@@ -87,7 +87,7 @@ namespace WebApplication1
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Post([FromBody] object update)
+		public async Task<IActionResult> Post([FromBody] Update update)
 		{
 				Console.WriteLine($"start");
 				Console.WriteLine($"Raw data: {update}");
