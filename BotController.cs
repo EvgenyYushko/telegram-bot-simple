@@ -17,18 +17,30 @@ namespace WebApplication1
 	public class BotController : ControllerBase
 	{
 		private static string botToken = "6769660711:AAF1wwIyjL1MLpU9ESvelhECSUam5N48E_I"; // Замените на ваш API токен
+		private static string _webhookUrl = "https://telegram-bot-simple.onrender.com/api/bot";
 
-		private TelegramBotClient _botClient;
+		public TelegramBotClient _botClient;
 
 		public BotController()
 		{
 			InitClient();
-			//Test();
 		}
 
 		private void InitClient()
 		{
 			_botClient = new TelegramBotClient(botToken);
+		}
+
+		public async Task ConfigureWebhookAsync(bool local)
+		{
+			if (local)
+			{
+				await _botClient.DeleteWebhookAsync();
+			}
+			else
+			{
+				await _botClient.SetWebhookAsync(_webhookUrl);
+			}
 		}
 
 		[HttpPost]
@@ -113,15 +125,9 @@ namespace WebApplication1
 			);
 		}
 
-		[HttpGet("Test")]
-		public IActionResult Test(int a)
-		{
-			return Ok(a++);
-		}
-
 		#region Test
 
-		private void Test()
+		public void Test()
 		{
 			using var cts = new CancellationTokenSource();
 			// Запуск бота с обработкой сообщений
@@ -136,7 +142,8 @@ namespace WebApplication1
 			);
 			_botClient.OnApiResponseReceived += BotClient_OnApiResponseReceived;
 			_botClient.OnMakingApiRequest += BotClient_OnMakingApiRequest;
-			//_botClient.DeleteWebhookAsync(true);
+
+			Task.Run(async () => await ConfigureWebhookAsync(true));
 		}
 
 		private async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
@@ -158,7 +165,7 @@ namespace WebApplication1
 
 		private static ValueTask BotClient_OnMakingApiRequest(ITelegramBotClient botClient,
 			Telegram.Bot.Args.ApiRequestEventArgs args, CancellationToken cancellationToken = default) => default;
-		
+
 
 		private static ValueTask BotClient_OnApiResponseReceived(ITelegramBotClient botClient,
 			Telegram.Bot.Args.ApiResponseEventArgs args, CancellationToken cancellationToken = default) => default;

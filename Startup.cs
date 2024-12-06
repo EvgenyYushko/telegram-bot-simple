@@ -54,7 +54,16 @@ namespace WebApplication1
 				endpoints.MapRazorPages();
 			});
 
-			//var s = new BotController();
+			var local = false;
+			var s = new BotController();
+			if (local)
+			{
+				s.Test();
+			}
+			else
+			{
+				Task.Run(async ()=>await s.ConfigureWebhookAsync(false));
+			}
 		}
 	}
 }
