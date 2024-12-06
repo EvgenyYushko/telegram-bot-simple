@@ -1,0 +1,14 @@
+﻿# Регистрация вебхуков
+curl -F "url=https://telegram-bot-simple.onrender.com/api/bot" https://api.telegram.org/bot6769660711:AAF1wwIyjL1MLpU9ESvelhECSUam5N48E_I/setWebhook
+
+# Получение информации о вубхуках
+curl https://api.telegram.org/bot6769660711:AAF1wwIyjL1MLpU9ESvelhECSUam5N48E_I/getWebhookInfo
+
+# Получение модели телеграмма отправляемую вебхуками
+curl https://api.telegram.org/bot6769660711:AAF1wwIyjL1MLpU9ESvelhECSUam5N48E_I/getUpdates
+
+# Отправляем роучной запрос на вебхуки
+curl -X POST -H "Content-Type: application/json" -d '{"update_id":123456789,"message":{"chat":{"id":1231047171,"first_name":"Test","type":"private"},"text":"Hello bot"}}' https://telegram-bot-simple.onrender.com/api/bot
+
+# Удалить вебхуки
+curl -X POST https://api.telegram.org/bot6769660711:AAF1wwIyjL1MLpU9ESvelhECSUam5N48E_I/deleteWebhook

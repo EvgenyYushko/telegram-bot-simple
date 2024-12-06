@@ -31,18 +31,6 @@ namespace WebApplication1
 			_botClient = new TelegramBotClient(botToken);
 		}
 
-		public async Task ConfigureWebhookAsync(bool local)
-		{
-			if (local)
-			{
-				await _botClient.DeleteWebhookAsync();
-			}
-			else
-			{
-				await _botClient.SetWebhookAsync(_webhookUrl);
-			}
-		}
-
 		[HttpPost]
 		public async Task<IActionResult> Post([FromBody] Update update)
 		{
@@ -50,7 +38,10 @@ namespace WebApplication1
 
 			var cancellationToken = new CancellationToken();
 
-			if (update.Message == null) return Ok();
+			if (update.Message == null)
+			{
+				return Ok();
+			}
 
 			var message = update.Message;
 			var chatId = message.Chat.Id;
@@ -123,6 +114,18 @@ namespace WebApplication1
 				replyMarkup: keyboard,
 				cancellationToken: cancellationToken
 			);
+		}
+
+		public async Task ConfigureWebhookAsync(bool local)
+		{
+			if (local)
+			{
+				await _botClient.DeleteWebhookAsync();
+			}
+			else
+			{
+				await _botClient.SetWebhookAsync(_webhookUrl);
+			}
 		}
 
 		#region Test
