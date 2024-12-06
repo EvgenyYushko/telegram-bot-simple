@@ -1,2 +1,3 @@
 https://habr.com/ru/search/?q=telegram+bot#h
 https://github.com/TelegramBots/Telegram.Bot.Examples/blob/master/Webhook.Controllers/Services/UpdateHandler.cs
+https://www.airdroid.com/ai-insights/telegram-bot-hosting/
