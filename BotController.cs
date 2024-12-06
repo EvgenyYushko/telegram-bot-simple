@@ -89,65 +89,61 @@ namespace WebApplication1
 		[HttpPost]
 		public async Task<IActionResult> Post([FromBody] Update update)
 		{
-				Console.WriteLine($"start");
-				Console.WriteLine($"Raw data: {update}");
-				Console.WriteLine($"Bot {await _botClient.GetMeAsync()} is running...");;
+			Console.WriteLine($"Bot {await _botClient.GetMeAsync()} is running...");;
 
-				var cancellationToken = new CancellationToken();
+			var cancellationToken = new CancellationToken();
 
-				//if (update.Message == null) return Ok();
+			if (update.Message == null) return Ok();
 
-				//var message = update.Message;
-				//var chatId = message.Chat.Id;
+			var message = update.Message;
+			var chatId = message.Chat.Id;
 
-				//var res = Enum.TryParse<MessageType>(message.Chat.Type, out var type);
+			switch (message.Type)
+			{
+				case MessageType.Text:
+					await _botClient.SendTextMessageAsync(chatId, "Вы отправили текст: " + message.Text,
+						cancellationToken: cancellationToken);
+					await ShowButtons(_botClient, chatId, cancellationToken);
+					break;
 
-				//switch (type)
-				//{
-				//	case MessageType.Text:
-				//		await _botClient.SendTextMessageAsync(chatId, "Вы отправили текст: " + message.Text,
-				//			cancellationToken: cancellationToken);
-				//		await ShowButtons(_botClient, chatId, cancellationToken);
-				//		break;
+				case MessageType.Photo:
+					await _botClient.SendTextMessageAsync(chatId, "Вы отправили фото!",
+						cancellationToken: cancellationToken);
+					break;
 
-				//	case MessageType.Photo:
-				//		await _botClient.SendTextMessageAsync(chatId, "Вы отправили фото!",
-				//			cancellationToken: cancellationToken);
-				//		break;
+				case MessageType.Document:
+					await _botClient.SendTextMessageAsync(chatId, "Вы отправили файл: " + message.Document.FileName,
+						cancellationToken: cancellationToken);
+					break;
 
-				//	//case MessageType.Document:
-				//	//	await _botClient.SendTextMessageAsync(chatId, "Вы отправили файл: " + message.Document.FileName,
-				//	//		cancellationToken: cancellationToken);
-				//	//	break;
+				case MessageType.Audio:
+					await _botClient.SendTextMessageAsync(chatId, "Вы отправили аудио!",
+						cancellationToken: cancellationToken);
+					break;
 
-				//	case MessageType.Audio:
-				//		await _botClient.SendTextMessageAsync(chatId, "Вы отправили аудио!",
-				//			cancellationToken: cancellationToken);
-				//		break;
+				case MessageType.Video:
+					await _botClient.SendTextMessageAsync(chatId, "Вы отправили видео!",
+						cancellationToken: cancellationToken);
+					break;
 
-				//	case MessageType.Video:
-				//		await _botClient.SendTextMessageAsync(chatId, "Вы отправили видео!",
-				//			cancellationToken: cancellationToken);
-				//		break;
+				default:
+					await _botClient.SendTextMessageAsync(chatId, "Я пока не умею обрабатывать это сообщение.",
+						cancellationToken: cancellationToken);
+					break;
+			}
+			//if (update.Message != null)
+			//{
+			//	var chatId = update.Message.Chat.Id;
+			//	var messageText = update.Message.Text;
 
-				//	default:
-				//		await _botClient.SendTextMessageAsync(chatId, "Я пока не умею обрабатывать это сообщение.",
-				//			cancellationToken: cancellationToken);
-				//		break;
-				//}
-				//if (update.Message != null)
-				//{
-				//	var chatId = update.Message.Chat.Id;
-				//	var messageText = update.Message.Text;
+			//	if (messageText.Contains("хуй"))
+			//	{
+			//		await _botClient.BanChatMemberAsync(chatId, update.Message.From.Id);
+			//	}
 
-				//	if (messageText.Contains("хуй"))
-				//	{
-				//		await _botClient.BanChatMemberAsync(chatId, update.Message.From.Id);
-				//	}
-
-				//	//1231047171
-				//	await _botClient.SendTextMessageAsync(chatId, $"You said: {messageText}");
-				//}
+			//	//1231047171
+			//	await _botClient.SendTextMessageAsync(chatId, $"You said: {messageText}");
+			//}
 
 			return Ok();
 		}
