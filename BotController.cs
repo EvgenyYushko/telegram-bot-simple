@@ -41,7 +41,7 @@ namespace WebApplication1
 			);
 			_botClient.OnApiResponseReceived += BotClient_OnApiResponseReceived;
 			_botClient.OnMakingApiRequest += BotClient_OnMakingApiRequest;
-			_botClient.DeleteWebhookAsync(true);
+			//_botClient.DeleteWebhookAsync(true);
 		}
 
 		private static async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
@@ -87,14 +87,15 @@ namespace WebApplication1
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Post([FromBody] object update)
+		public async Task<IActionResult> Post([FromBody] TelegramResponse update)
 		{
 			try
 			{
-				var cancellationToken = new CancellationToken();
 				var t = System.Text.Json.JsonSerializer.Deserialize<Update>(update.ToString());
 				Console.WriteLine($"{t}");;
 				Console.WriteLine($"Bot {await _botClient.GetMeAsync()} is running...");;
+
+				var cancellationToken = new CancellationToken();
 
 				//if (update.Message == null) return Ok();
 
