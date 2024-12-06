@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -24,6 +26,11 @@ namespace WebApplication1
 		{
 			InitClient();
 			//Test();
+		}
+
+		private void InitClient()
+		{
+			_botClient = new TelegramBotClient(botToken);
 		}
 
 		private void Test()
@@ -81,11 +88,6 @@ namespace WebApplication1
 			return default;
 		}
 
-		private void InitClient()
-		{
-			_botClient = new TelegramBotClient(botToken);
-		}
-
 		[HttpPost]
 		public async Task<IActionResult> Post([FromBody] Update update)
 		{
@@ -109,6 +111,7 @@ namespace WebApplication1
 				case MessageType.Photo:
 					await _botClient.SendTextMessageAsync(chatId, "Вы отправили фото!",
 						cancellationToken: cancellationToken);
+					await SendPhoto(message);
 					break;
 
 				case MessageType.Document:
@@ -131,21 +134,17 @@ namespace WebApplication1
 						cancellationToken: cancellationToken);
 					break;
 			}
-			//if (update.Message != null)
-			//{
-			//	var chatId = update.Message.Chat.Id;
-			//	var messageText = update.Message.Text;
-
-			//	if (messageText.Contains("хуй"))
-			//	{
-			//		await _botClient.BanChatMemberAsync(chatId, update.Message.From.Id);
-			//	}
-
-			//	//1231047171
-			//	await _botClient.SendTextMessageAsync(chatId, $"You said: {messageText}");
-			//}
 
 			return Ok();
+		}
+
+		private async Task<Message> SendPhoto(Message msg)
+		{
+			// Получаем самый крупный файл (последний в массиве)
+			var fileId = msg.Photo.Last().FileId;
+
+			// Отправляем фото обратно в чат
+			return await _botClient.SendPhotoAsync(msg.Chat.Id, InputFile.FromFileId(fileId));
 		}
 
 		private static async Task ShowButtons(ITelegramBotClient botClient, long chatId, CancellationToken cancellationToken)
@@ -179,66 +178,66 @@ namespace WebApplication1
 	}
 
 
-	public class TelegramResponse
-	{
-		[JsonPropertyName("message")]
-		public Message Message { get; set; }
-	}
+	//public class TelegramResponse
+	//{
+	//	[JsonPropertyName("message")]
+	//	public Message Message { get; set; }
+	//}
 
-	public class Message
-	{
-		[JsonPropertyName("message_id")]
-		public int MessageId { get; set; }
+	//public class Message
+	//{
+	//	[JsonPropertyName("message_id")]
+	//	public int MessageId { get; set; }
 
-		[JsonPropertyName("from")]
-		public User From { get; set; }
+	//	[JsonPropertyName("from")]
+	//	public User From { get; set; }
 
-		[JsonPropertyName("chat")]
-		public Chat Chat { get; set; }
+	//	[JsonPropertyName("chat")]
+	//	public Chat Chat { get; set; }
 
-		[JsonPropertyName("date")]
-		public long Date { get; set; } // UNIX timestamp
+	//	[JsonPropertyName("date")]
+	//	public long Date { get; set; } // UNIX timestamp
 
-		[JsonPropertyName("text")]
-		public string Text { get; set; }
-	}
+	//	[JsonPropertyName("text")]
+	//	public string Text { get; set; }
+	//}
 
-	public class User
-	{
-		[JsonPropertyName("id")]
-		public long Id { get; set; }
+	//public class User
+	//{
+	//	[JsonPropertyName("id")]
+	//	public long Id { get; set; }
 
-		[JsonPropertyName("is_bot")]
-		public bool IsBot { get; set; }
+	//	[JsonPropertyName("is_bot")]
+	//	public bool IsBot { get; set; }
 
-		[JsonPropertyName("first_name")]
-		public string FirstName { get; set; }
+	//	[JsonPropertyName("first_name")]
+	//	public string FirstName { get; set; }
 
-		[JsonPropertyName("last_name")]
-		public string LastName { get; set; }
+	//	[JsonPropertyName("last_name")]
+	//	public string LastName { get; set; }
 
-		[JsonPropertyName("username")]
-		public string Username { get; set; }
+	//	[JsonPropertyName("username")]
+	//	public string Username { get; set; }
 
-		[JsonPropertyName("language_code")]
-		public string LanguageCode { get; set; }
-	}
+	//	[JsonPropertyName("language_code")]
+	//	public string LanguageCode { get; set; }
+	//}
 
-	public class Chat
-	{
-		[JsonPropertyName("id")]
-		public long Id { get; set; }
+	//public class Chat
+	//{
+	//	[JsonPropertyName("id")]
+	//	public long Id { get; set; }
 
-		[JsonPropertyName("first_name")]
-		public string FirstName { get; set; }
+	//	[JsonPropertyName("first_name")]
+	//	public string FirstName { get; set; }
 
-		[JsonPropertyName("last_name")]
-		public string LastName { get; set; }
+	//	[JsonPropertyName("last_name")]
+	//	public string LastName { get; set; }
 
-		[JsonPropertyName("username")]
-		public string Username { get; set; }
+	//	[JsonPropertyName("username")]
+	//	public string Username { get; set; }
 
-		[JsonPropertyName("type")]
-		public string Type { get; set; } // Например, "private"
-	}
+	//	[JsonPropertyName("type")]
+	//	public string Type { get; set; } // Например, "private"
+	//}
 }
