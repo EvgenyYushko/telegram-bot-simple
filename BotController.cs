@@ -87,12 +87,10 @@ namespace WebApplication1
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Post([FromBody] TelegramResponse update)
+		public async Task<IActionResult> Post([FromBody] object update)
 		{
-			try
-			{
-				var t = System.Text.Json.JsonSerializer.Deserialize<Update>(update.ToString());
-				Console.WriteLine($"{t}");;
+				Console.WriteLine($"start");
+				Console.WriteLine($"Raw data: {update}");
 				Console.WriteLine($"Bot {await _botClient.GetMeAsync()} is running...");;
 
 				var cancellationToken = new CancellationToken();
@@ -150,13 +148,6 @@ namespace WebApplication1
 				//	//1231047171
 				//	await _botClient.SendTextMessageAsync(chatId, $"You said: {messageText}");
 				//}
-
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine(e);
-				InitClient();
-			}
 
 			return Ok();
 		}
