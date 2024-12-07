@@ -91,11 +91,11 @@ namespace WebApplication1
 			return Ok("OK");
 		}
 
-		[HttpGet("KeepAlive")]
-		public IActionResult KeepAlive(int a)
-		{
-			return Ok(++a);
-		}
+		//[HttpGet("KeepAlive")]
+		//public IActionResult KeepAlive(int a)
+		//{
+		//	return Ok(++a);
+		//}
 
 		private async Task<Message> SendPhoto(Message msg)
 		{
