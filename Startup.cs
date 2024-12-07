@@ -98,7 +98,7 @@ namespace WebApplication1
 					try
 					{
 						// Полный адрес с параметрами
-						string url = "https://telegram-bot-simple.onrender.com/Bot/health";
+						string url = "https://telegram-bot-simple.onrender.com/health";
 
 						// Отправляем GET-запрос
 						HttpResponseMessage response = await secureClient.GetAsync(url);
@@ -112,7 +112,7 @@ namespace WebApplication1
 						}
 						else
 						{
-							Console.WriteLine($"Ошибка: {response.StatusCode}");
+							Console.WriteLine($"Errore: {response.StatusCode}");
 						}
 					}
 					catch (Exception ex)
