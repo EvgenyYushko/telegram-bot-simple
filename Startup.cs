@@ -67,7 +67,7 @@ namespace WebApplication1
 				Task.Run(async ()=>await s.ConfigureWebhookAsync(false));
 			}
 
-			StartTimer();
+			//StartTimer();
 		}
 
 		private static Timer _timer;

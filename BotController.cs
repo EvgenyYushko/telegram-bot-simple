@@ -84,6 +84,12 @@ namespace WebApplication1
 			return Ok();
 		}
 
+		[HttpGet("health")]
+		public IActionResult health(int a)
+		{
+			return Ok("OK");
+		}
+
 		[HttpGet("KeepAlive")]
 		public IActionResult KeepAlive(int a)
 		{
