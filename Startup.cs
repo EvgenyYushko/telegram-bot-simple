@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -64,6 +66,66 @@ namespace WebApplication1
 			{
 				Task.Run(async ()=>await s.ConfigureWebhookAsync(false));
 			}
+
+			StartTimer();
+		}
+
+		private static Timer _timer;
+
+		static void StartTimer()
+		{
+			// Настраиваем таймер, чтобы метод RunPeriodicTask вызывался каждые 30 минут
+			_timer = new Timer(async _ => await SendHttpRequest(), null, TimeSpan.Zero, TimeSpan.FromMinutes(1));
+
+			Console.WriteLine("Программа запущена. Нажмите Enter для завершения...");
+		}
+
+		private static async Task SendHttpRequest()
+		{
+			Console.WriteLine("Start KeepAlive");
+			// Создаём экземпляр HttpClient
+			using (HttpClient client = new HttpClient())
+			{
+				// Указываем базовый адрес (опционально)
+				client.BaseAddress = new Uri("https://telegram-bot-simple.onrender.com");
+				
+				// Настройка пропуска проверки SSL-сертификата (только для локальной разработки)
+				HttpClientHandler handler = new HttpClientHandler
+				{
+					ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => true
+				};
+
+				// Повторное использование HttpClient с обработчиком
+				using (HttpClient secureClient = new HttpClient(handler))
+				{
+					try
+					{
+						// Полный адрес с параметрами
+						string url = "https://telegram-bot-simple.onrender.com/api/Bot/KeepAlive?a=1";
+
+						// Отправляем GET-запрос
+						HttpResponseMessage response = await secureClient.GetAsync(url);
+
+						// Проверяем успешность запроса
+						if (response.IsSuccessStatusCode)
+						{
+							// Читаем содержимое ответа
+							string responseContent = await response.Content.ReadAsStringAsync();
+							Console.WriteLine($"Ответ от сервера: {responseContent}");
+						}
+						else
+						{
+							Console.WriteLine($"Ошибка: {response.StatusCode}");
+						}
+					}
+					catch (Exception ex)
+					{
+						// Обработка ошибок
+						Console.WriteLine($"Ошибка при выполнении запроса: {ex.Message}");
+					}
+				}
+			}
+			Console.WriteLine("End KeepAlive");
 		}
 	}
 }
