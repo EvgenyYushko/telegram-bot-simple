@@ -84,6 +84,12 @@ namespace WebApplication1
 			return Ok();
 		}
 
+		[HttpGet("KeepAlive")]
+		public IActionResult KeepAlive(int a)
+		{
+			return Ok(++a);
+		}
+
 		private async Task<Message> SendPhoto(Message msg)
 		{
 			// Получаем самый крупный файл (последний в массиве)
