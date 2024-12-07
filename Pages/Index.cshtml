@@ -1,10 +1,50 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Telegram Bot";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+<div class="container my-5">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white text-center py-4">
+            <h1 class="display-5">🤖 Telegram Bot</h1>
+            <p class="mb-0">Умный помощник в вашем чате</p>
+        </div>
+        <div class="card-body">
+            <h3 class="text-center mb-4">📚 Описание</h3>
+            <p>
+                Этот бот предназначен для автоматизации задач, взаимодействия с пользователями и обработки различных запросов в реальном времени.
+                Он поддерживает обработку текстовых сообщений, медиафайлов (фото, видео, аудио) и команд.
+            </p>
+            <hr />
+            <h3 class="text-center mb-4">✨ Возможности</h3>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">📩 Отправка и обработка текстовых сообщений</li>
+                <li class="list-group-item">📷 Работа с фото, видео и аудио</li>
+                <li class="list-group-item">📂 Поддержка файлов и документов</li>
+                <li class="list-group-item">⚙️ Настраиваемые команды для взаимодействия</li>
+                <li class="list-group-item">🌐 Интеграция с внешними API</li>
+            </ul>
+            <hr />
+            <h3 class="text-center mb-4">🚀 Быстрый старт</h3>
+            <p>
+                Чтобы начать использовать бота, выполните следующие шаги:
+            </p>
+            <ol class="list-group list-group-numbered">
+                <li class="list-group-item">Найдите бота в Telegram по имени: <code>Антиспам бот</code></li>
+                <li class="list-group-item">Нажмите <strong>Start</strong>, чтобы активировать бота</li>
+                <li class="list-group-item">Используйте команды или отправьте сообщение для взаимодействия</li>
+            </ol>
+            <hr />
+            <h3 class="text-center mb-4">🔗 Полезные ссылки</h3>
+            <div class="d-flex justify-content-center gap-4">
+                <a class="btn btn-primary" href="https://core.telegram.org/bots/api" target="_blank">Telegram API</a>
+                <a class="btn btn-secondary" href="https://docs.microsoft.com/aspnet/core" target="_blank">ASP.NET Core Docs</a>
+            </div>
+        </div>
+        <div class="card-footer text-center text-muted py-3">
+            &copy; 2024 Your Bot Name. Все права защищены.
+        </div>
+    </div>
 </div>

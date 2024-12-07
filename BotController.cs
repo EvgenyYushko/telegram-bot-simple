@@ -124,7 +124,11 @@ namespace WebApplication1
 			}
 			else
 			{
-				await _botClient.SetWebhookAsync(_webhookUrl);
+				var wh = await _botClient.GetWebhookInfoAsync();
+				if (wh.IpAddress is null)
+				{
+					await _botClient.SetWebhookAsync(_webhookUrl);
+				}
 			}
 		}
 
