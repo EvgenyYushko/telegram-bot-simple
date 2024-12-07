@@ -84,9 +84,10 @@ namespace WebApplication1
 			return Ok();
 		}
 
-		[HttpGet("health")]
+		[HttpGet("/health")]
 		public IActionResult health(int a)
 		{
+			Console.WriteLine("health - OK");
 			return Ok("OK");
 		}
 

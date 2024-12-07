@@ -75,7 +75,7 @@ namespace WebApplication1
 		static void StartTimer()
 		{
 			// Настраиваем таймер, чтобы метод RunPeriodicTask вызывался каждые 30 минут
-			_timer = new Timer(async _ => await SendHttpRequest(), null, TimeSpan.Zero, TimeSpan.FromMinutes(10));
+			_timer = new Timer(async _ => await SendHttpRequest(), null, TimeSpan.Zero, TimeSpan.FromMinutes(1));
 
 			Console.WriteLine("StartTimer...");
 		}
