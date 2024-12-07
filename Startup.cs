@@ -75,9 +75,9 @@ namespace WebApplication1
 		static void StartTimer()
 		{
 			// Настраиваем таймер, чтобы метод RunPeriodicTask вызывался каждые 30 минут
-			_timer = new Timer(async _ => await SendHttpRequest(), null, TimeSpan.Zero, TimeSpan.FromMinutes(1));
+			_timer = new Timer(async _ => await SendHttpRequest(), null, TimeSpan.Zero, TimeSpan.FromMinutes(10));
 
-			Console.WriteLine("Программа запущена. Нажмите Enter для завершения...");
+			Console.WriteLine("StartTimer...");
 		}
 
 		private static async Task SendHttpRequest()
@@ -111,7 +111,7 @@ namespace WebApplication1
 						{
 							// Читаем содержимое ответа
 							string responseContent = await response.Content.ReadAsStringAsync();
-							Console.WriteLine($"Ответ от сервера: {responseContent}");
+							Console.WriteLine($"KeepAliveStatus: {responseContent}");
 						}
 						else
 						{
